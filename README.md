@@ -18,7 +18,7 @@ This repository hosts a 3D data visualization tool developed using Streamlit and
 
 ## Deployment
 
-The tool is deployed using Streamlit Cloud, allowing it to run directly in the browser. Access the live application [here]([https://your-username-streamlit-cloud-link](https://3dgenerator-tytwenoyorbmupsp6scjnb.streamlit.app/)).
+The tool is deployed using Streamlit Cloud, allowing it to run directly in the browser. Access the live application [here](https://3dgenerator-tytwenoyorbmupsp6scjnb.streamlit.app/).
 
 ## Installation (For Local Development)
 
