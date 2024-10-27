@@ -4,8 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 from scipy.interpolate import griddata
 
-# Read the data file
-csv_file_path = 'data_indice.csv'  # Replace with the actual file path
+csv_file_path = 'data_indice.csv' 
 data = pd.read_csv(csv_file_path)
 data_split = data.iloc[:, 0].str.split(',', expand=True)
 data_split.columns = ['Index', 'X', 'Y', 'Z']
@@ -14,7 +13,6 @@ data_split['X'] = pd.to_numeric(data_split['X'], errors='coerce')
 data_split['Y'] = pd.to_numeric(data_split['Y'], errors='coerce')
 data_split['Z'] = pd.to_numeric(data_split['Z'], errors='coerce')
 
-# Group data by index prefix
 grouped_data = {f"{i}_": data_split[data_split['Index'].str.startswith(f"{i}_")]
                 for i in range(1, 10)}
 
@@ -49,7 +47,6 @@ def generate_mesh_plot_with_points(selected_groups):
     for i, group in enumerate(selected_groups):
         group_data = grouped_data[group]
         
-        # Add the 3D mesh
         fig.add_trace(go.Mesh3d(
             x=group_data['X'],
             y=group_data['Y'],
@@ -59,7 +56,6 @@ def generate_mesh_plot_with_points(selected_groups):
             name=f"Group {group}"
         ))
 
-        # Add scatter points
         fig.add_trace(go.Scatter3d(
             x=group_data['X'],
             y=group_data['Y'],
@@ -76,7 +72,6 @@ def generate_mesh_plot_with_points(selected_groups):
                           yaxis_title='PR RW',
                           zaxis_title='SCR'
                       ))
-
     return fig
 
 def generate_contour_plot(selected_groups):
@@ -85,13 +80,11 @@ def generate_contour_plot(selected_groups):
     for i, group in enumerate(selected_groups):
         group_data = grouped_data[group]
         
-        # Create a grid for contour plot
         xi = np.linspace(group_data['X'].min(), group_data['X'].max(), 100)
         yi = np.linspace(group_data['Y'].min(), group_data['Y'].max(), 100)
         xi, yi = np.meshgrid(xi, yi)
         zi = griddata((group_data['X'], group_data['Y']), group_data['Z'], (xi, yi), method='cubic')
         
-        # Add contour and scatter points
         fig.add_trace(go.Contour(
             x=xi[0],
             y=yi[:, 0],
@@ -115,13 +108,10 @@ def generate_contour_plot(selected_groups):
 
     return fig
 
-# Streamlit app title
 st.title("3D Plot Generator")
 
-# Show multiselect box for group selection
 selected_groups = st.multiselect("Select Groups", list(grouped_data.keys()))
 
-# Select plot type
 plot_type = st.selectbox("Select Plot Type", ["3D Scatter Plot", "3D Mesh Plot with Points", "3D Contour Plot"])
 
 if st.button("Generate Plot"):
