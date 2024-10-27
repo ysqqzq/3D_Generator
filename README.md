@@ -1,6 +1,5 @@
 # Creating a README.md file for the user's GitHub repository
 
-readme_content = """
 # 3D Data Visualization Tool
 
 This repository hosts a 3D data visualization tool developed using Streamlit and Plotly. The application provides interactive 3D plots that can be customized and visualized directly in the browser. Designed for data analysis and visualization, this tool is particularly useful for understanding the relationships among multiple dimensions in a dataset.
